@@ -3,7 +3,7 @@ package agh.ics.oop;
 import agh.ics.oop.model.MoveDirection;
 import org.junit.jupiter.api.Test;
 
-import static agh.ics.oop.OptionsParser.parseMoveDirection;
+import static agh.ics.oop.OptionsParser.parseMoveDirections;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OptionsParserTest {
@@ -17,7 +17,7 @@ class OptionsParserTest {
                 MoveDirection.RIGHT
         };
 
-        assertArrayEquals(expected, parseMoveDirection(input));
+        assertArrayEquals(expected, parseMoveDirections(input));
     }
 
     @Test
@@ -29,7 +29,7 @@ class OptionsParserTest {
                 MoveDirection.LEFT
         };
 
-        assertArrayEquals(expected, parseMoveDirection(input));
+        assertArrayEquals(expected, parseMoveDirections(input));
     }
 
     @Test
@@ -37,7 +37,7 @@ class OptionsParserTest {
         String[] input = {"x", "y", "abcb", "esaw"};
         MoveDirection[] expected = {};
 
-        assertArrayEquals(expected, parseMoveDirection(input));
+        assertArrayEquals(expected, parseMoveDirections(input));
     }
 
     @Test
@@ -45,7 +45,7 @@ class OptionsParserTest {
         String[] input = {};
         MoveDirection[] expected = {};
 
-        assertArrayEquals(expected, parseMoveDirection(input));
+        assertArrayEquals(expected, parseMoveDirections(input));
     }
 
     @Test
@@ -55,6 +55,6 @@ class OptionsParserTest {
                 MoveDirection.BACKWARD
         };
         // program miał interpretować tylko lowercasy
-        assertArrayEquals(expected, parseMoveDirection(input));
+        assertArrayEquals(expected, parseMoveDirections(input));
     }
 }

@@ -10,7 +10,7 @@ public class World {
         //printSeq(args);
 
         System.out.println("Zwierzak wystartował");
-        run(OptionsParser.parseMoveDirection(args));
+        run(OptionsParser.parseMoveDirections(args));
         System.out.println("Zwierzak się zatrzymał");
 
         //System.out.println("System zakończył działanie");
