@@ -26,7 +26,7 @@ public class World {
     }
 
 
-    static void run(MoveDirection[] args)
+    private static void run(MoveDirection[] args)
     {
         for (MoveDirection dir : args)
         {
