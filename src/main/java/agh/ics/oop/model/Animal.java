@@ -33,10 +33,10 @@ public class Animal {
         return (position.equals(this.position));
     }
 
-    private boolean withinMap(Vector2d position)
-    {
-
-    }
+//    private boolean withinMap(Vector2d position) // TODO
+//    {
+//
+//    }
 
     public void move(MoveDirection direction)
     {
