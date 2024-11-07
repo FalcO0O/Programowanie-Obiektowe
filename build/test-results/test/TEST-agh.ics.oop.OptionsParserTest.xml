@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="agh.ics.oop.OptionsParserTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2024-11-07T02:07:07" hostname="DESKTOP-RFOQRB3" time="0.005">
+  <properties/>
+  <testcase name="parseEmptyArray()" classname="agh.ics.oop.OptionsParserTest" time="0.001"/>
+  <testcase name="parseAllInvalidDirections()" classname="agh.ics.oop.OptionsParserTest" time="0.001"/>
+  <testcase name="parseWithMixedCase()" classname="agh.ics.oop.OptionsParserTest" time="0.001"/>
+  <testcase name="parseWithInvalidDirections()" classname="agh.ics.oop.OptionsParserTest" time="0.001"/>
+  <testcase name="parseValidDirections()" classname="agh.ics.oop.OptionsParserTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

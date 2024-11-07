@@ -22,10 +22,7 @@ public class Animal {
 
     @Override
     public String toString() {
-        return "Animal:" +
-                "orientation = " + orientation +
-                ", position = " + position +
-                '}';
+        return "Animal:" + "orientation = " + orientation + ", position = " + position + '}';
     }
 
     public boolean isAt(Vector2d position)
@@ -33,10 +30,14 @@ public class Animal {
         return (position.equals(this.position));
     }
 
-//    private boolean withinMap(Vector2d position) // TODO
-//    {
-//
-//    }
+    private boolean withinMap(Vector2d position)
+    {
+        if (position.getX() >= 0 && position.getX() <= 4)
+        {
+            return position.getY() >= 0 && position.getY() <= 4;
+        }
+        return false;
+    }
 
     public void move(MoveDirection direction)
     {
@@ -45,24 +46,24 @@ public class Animal {
             case LEFT -> {orientation = orientation.previous();}
             case RIGHT -> {orientation = orientation.next();}
             case FORWARD -> {
-                switch (this.orientation)
-                {
-                    case NORTH -> this.position.add(UP);
-                    case SOUTH -> this.position.add(DOWN);
-                    case EAST -> this.position.add(RIGHT);
-                    case WEST -> this.position.add(LEFT);
-                }
+                Vector2d newPosition = this.position.add(orientation.toUnitVector());
+                if (withinMap(newPosition)) this.position = newPosition;
             }
             case BACKWARD -> {
-                switch (this.orientation)
-                {
-                    case NORTH -> this.position.add(DOWN);
-                    case SOUTH -> this.position.add(UP);
-                    case EAST -> this.position.add(LEFT);
-                    case WEST -> this.position.add(RIGHT);
-                }
+                Vector2d newPosition = this.position.add(orientation.toUnitVector().opposite());
+                if (withinMap(newPosition)) this.position = newPosition;
             }
         }
+    }
+
+    public Vector2d getPosition()
+    {
+        return position;
+    }
+
+    public MapDirection getOrientation()
+    {
+        return orientation;
     }
 
 }

@@ -127,6 +127,6 @@ class Vector2dTest {
         Vector2d v1 = new Vector2d(2, 3);
         Vector2d expected = new Vector2d(-2, -3);
 
-        assertEquals(expected, v1.opposite(v1), "Opposite of v1 should equal expected");
+        assertEquals(expected, v1.opposite(), "Opposite of v1 should equal expected");
     }
 }

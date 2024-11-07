@@ -41,9 +41,9 @@ public class Vector2d {
         return new Vector2d(min(this.x, other.x), min(this.y, other.y));
     }
 
-    public Vector2d opposite(Vector2d other)
+    public Vector2d opposite()
     {
-        return new Vector2d(-other.x, -other.y);
+        return new Vector2d(-x, -y);
     }
 
     @Override
