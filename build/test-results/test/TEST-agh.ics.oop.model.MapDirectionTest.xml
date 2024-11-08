@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="agh.ics.oop.model.MapDirectionTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-11-07T02:07:07" hostname="DESKTOP-RFOQRB3" time="0.001">
-  <properties/>
-  <testcase name="previousAllDirections()" classname="agh.ics.oop.model.MapDirectionTest" time="0.0"/>
-  <testcase name="nextAllDirections()" classname="agh.ics.oop.model.MapDirectionTest" time="0.0"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
