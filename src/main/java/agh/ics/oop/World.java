@@ -1,45 +1,22 @@
 package agh.ics.oop;
 
+import agh.ics.oop.model.Animal;
 import agh.ics.oop.model.MoveDirection;
+import agh.ics.oop.model.Simulation;
+import agh.ics.oop.model.Vector2d;
+
+import java.util.List;
 
 public class World {
 
     public static void main(String[] args) {
-        //System.out.println("System wystartował");
-        //System.out.print("argumenty -> ");
-        //printSeq(args);
+        Animal Zwierze = new Animal();
+        System.out.println(Zwierze.toString());
 
-        System.out.println("Zwierzak wystartował");
-        run(OptionsParser.parseMoveDirections(args));
-        System.out.println("Zwierzak się zatrzymał");
-
-        //System.out.println("System zakończył działanie");
-    }
-
-    static void printSeq(String[] args)
-    {
-        System.out.print(args[0]);
-        for (int i = 1; i < args.length; i++) { // w poleceniu jest napisane że muszą występować conajmniej 2, więc zostawiam bez sprawdzania czy istnieje index w tablicy
-            System.out.print("," + args[i]);
-        }
-        System.out.println();
-    }
-
-
-    private static void run(MoveDirection[] args)
-    {
-        for (MoveDirection dir : args)
-        {
-            switch (dir)
-            {
-                case FORWARD -> System.out.println("Zwierzak idzie do przodu");
-                case RIGHT -> System.out.println("Zwierzak skręca w prawo");
-                case LEFT -> System.out.println("Zwierzak skręca w lewo");
-                case BACKWARD -> System.out.println("Zwierzak idzie do tyłu");
-                default -> {}
-            }
-        }
-
+        List<MoveDirection> directions = OptionsParser.parseMoveDirections(args);
+        List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
+        Simulation simulation = new Simulation(positions, directions);
+        simulation.run();
     }
 
 }

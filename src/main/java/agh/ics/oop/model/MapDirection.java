@@ -6,6 +6,11 @@ public enum MapDirection {
     WEST,
     EAST;
 
+    static final private Vector2d _NORTH = new Vector2d(0, 1);
+    static final private Vector2d _EAST = new Vector2d(1, 0);
+    static final private Vector2d _SOUTH = new Vector2d(0, -1);
+    static final private Vector2d _WEST = new Vector2d(-1, 0);
+
     @Override
     public String toString() {
         return switch(this)
@@ -43,10 +48,10 @@ public enum MapDirection {
     {
         return switch (this)
         {
-            case NORTH -> new Vector2d(0, 1);
-            case EAST -> new Vector2d(1, 0);
-            case SOUTH -> new Vector2d(-1, 0);
-            case WEST -> new Vector2d(0, -1);
+            case NORTH -> _NORTH;
+            case EAST -> _EAST;
+            case SOUTH -> _SOUTH;
+            case WEST -> _WEST;
         };
     }
 
