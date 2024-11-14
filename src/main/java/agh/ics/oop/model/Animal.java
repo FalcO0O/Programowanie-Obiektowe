@@ -4,10 +4,13 @@ public class Animal {
     private MapDirection orientation;
     private Vector2d position;
 
+/*
+Po zmianie kodu stało sie niepotrzebne
     private final Vector2d UP = new Vector2d(0, 1);
     private final Vector2d DOWN = new Vector2d(0, -1);
     private final Vector2d RIGHT = new Vector2d(1, 0);
     private final Vector2d LEFT = new Vector2d(-1, 0);
+*/
 
     public Animal()
     {
@@ -22,37 +25,30 @@ public class Animal {
 
     @Override
     public String toString() {
-        return "Animal:" + "orientation = " + orientation + ", position = " + position + '}';
+        return switch (orientation) {
+            case NORTH -> "^";
+            case SOUTH -> "v";
+            case EAST -> ">";
+            case WEST -> "<";
+        };
     }
 
     public boolean isAt(Vector2d position)
     {
-        return (position.equals(this.position));
+        return position.equals(this.position);
     }
 
-    private boolean withinMap(Vector2d position)
-    {
-        if (position.getX() >= 0 && position.getX() <= 4)
-        {
-            return position.getY() >= 0 && position.getY() <= 4;
+    public void move(MoveDirection direction, MoveValidator validator) {
+        Vector2d newPosition = null;
+        switch (direction) {
+            case LEFT -> orientation = orientation.previous();
+            case RIGHT -> orientation = orientation.next();
+            case FORWARD -> newPosition = this.position.add(orientation.toUnitVector());
+            case BACKWARD -> newPosition = this.position.add(orientation.toUnitVector().opposite());
+            default -> throw new IllegalStateException("Unexpected value: " + direction);
         }
-        return false;
-    }
-
-    public void move(MoveDirection direction)
-    {
-        switch (direction)
-        {
-            case LEFT -> {orientation = orientation.previous();}
-            case RIGHT -> {orientation = orientation.next();}
-            case FORWARD -> {
-                Vector2d newPosition = this.position.add(orientation.toUnitVector());
-                if (withinMap(newPosition)) this.position = newPosition;
-            }
-            case BACKWARD -> {
-                Vector2d newPosition = this.position.add(orientation.toUnitVector().opposite());
-                if (withinMap(newPosition)) this.position = newPosition;
-            }
+        if (newPosition != null && validator.canMoveTo(newPosition)) {
+            this.position = newPosition;
         }
     }
 
