@@ -17,10 +17,10 @@ Po zmianie kodu stało sie niepotrzebne
         position = new Vector2d(2, 2);
         orientation = MapDirection.NORTH;
     }
-    public Animal(int x, int y)
+    public Animal(Vector2d position)
     {
         orientation = MapDirection.NORTH;
-        position = new Vector2d(x, y);
+        this.position = position;
     }
 
     @Override

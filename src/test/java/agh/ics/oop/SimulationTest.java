@@ -1,7 +1,12 @@
-package agh.ics.oop.model;
+package agh.ics.oop;
 
+import agh.ics.oop.model.MapDirection;
+import agh.ics.oop.model.MoveDirection;
+import agh.ics.oop.model.RectangularMap;
+import agh.ics.oop.model.Vector2d;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -82,5 +87,14 @@ class SimulationTest {
         simulation.run();
 
         assertTrue(map.isOccupied(new Vector2d(1, 3)), "Animal should be at (1,3)");
+    }
+
+    @Test
+    public void numberOfAnimalsOnMapMatchesList() {
+        RectangularMap map = new RectangularMap(5,5);
+        List<MoveDirection> directions = null; // nie sprawdzamy tego
+        List<Vector2d> positions = List.of(new Vector2d(2, 2), new Vector2d(3, 4), new Vector2d(1, 1), new Vector2d(2,2));
+        Simulation simulation = new Simulation(positions, directions, map);
+        assertEquals(simulation.getNumOfAnimalsOnMap(), simulation.sizeOfAnimalList());
     }
 }
