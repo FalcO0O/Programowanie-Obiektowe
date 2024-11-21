@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RectangularMapTest {
+class RectangularMapTest { // stare testy dalej działają z interfejsem WorldMap
 
     @Test
     void placeAnimal() {
