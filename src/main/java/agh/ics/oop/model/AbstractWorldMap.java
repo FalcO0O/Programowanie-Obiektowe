@@ -1,13 +1,14 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.util.MapVisualizer;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public abstract class AbstractWorldMap implements WorldMap {
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
-    private final Vector2d lowerLeft = new Vector2d(0, 0);
-
+    protected final MapVisualizer MapDrafter = new MapVisualizer(this);
     public boolean place(Animal animal) {
         if (canMoveTo(animal.getPosition())) {
             animals.put(animal.getPosition(), animal);
@@ -19,20 +20,11 @@ public abstract class AbstractWorldMap implements WorldMap {
     public void move(Animal animal, MoveDirection direction) {
         switch (direction) {
             case LEFT, RIGHT -> animal.move(direction, this);
-            case FORWARD -> {
+            case FORWARD, BACKWARD -> {
                 Vector2d pos = animal.getPosition();
-                pos = pos.add(animal.getOrientation().toUnitVector());
-                if (canMoveTo(pos)) {
-                    animals.remove(animal.getPosition());
-                    animal.move(direction, this);
-                    animals.put(animal.getPosition(), animal);
-                }
-            }
-            case BACKWARD -> {
-                Vector2d pos = animal.getPosition().add(animal.getOrientation().toUnitVector().opposite());
-                if (canMoveTo(pos)) {
-                    animals.remove(animal.getPosition());
-                    animal.move(direction, this);
+                animal.move(direction, this);
+                if(!animal.getPosition().equals(pos)) {
+                    animals.remove(pos);
                     animals.put(animal.getPosition(), animal);
                 }
             }
@@ -45,7 +37,7 @@ public abstract class AbstractWorldMap implements WorldMap {
     }
 
     public boolean canMoveTo(Vector2d position) {
-        return position.follows(lowerLeft); // jedynie ten warunek jest wspólny dla obu klas dziedziczących
+        return !(objectAt(position) instanceof Animal); // jedynie ten warunek jest wspólny dla obu klas dziedziczących
     }
 
     @Override

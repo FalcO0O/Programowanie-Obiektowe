@@ -82,12 +82,6 @@ class GrassFieldTest {
     }
 
     @Test
-    void mapBoundariesForGrassField() {
-        Animal animal = new Animal(new Vector2d(-1, 0));
-        assertFalse(map.place(animal), "Animal should not be placed outside the map boundaries");
-    }
-
-    @Test
     void randomGrassPlacementConsistency() {
         ArrayList<WorldElement> elements = map.getElements();
         int grassCount = 0;

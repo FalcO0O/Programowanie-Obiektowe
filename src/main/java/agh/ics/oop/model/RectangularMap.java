@@ -1,10 +1,7 @@
 package agh.ics.oop.model;
 
-import agh.ics.oop.model.util.MapVisualizer;
-
 public class RectangularMap extends AbstractWorldMap {
     private final Vector2d lowerLeft, upperRight;
-    private final MapVisualizer mapDrafter = new MapVisualizer(this);
 
     public RectangularMap(int width, int height) {
         this.lowerLeft = new Vector2d(0, 0);
@@ -13,11 +10,11 @@ public class RectangularMap extends AbstractWorldMap {
 
     @Override
     public boolean canMoveTo(Vector2d position) {
-        return !isOccupied(position) && position.precedes(upperRight) && super.canMoveTo(position);
+        return super.canMoveTo(position) && (position.precedes(upperRight) && position.follows(lowerLeft));
     }
 
     @Override
     public String toString() {
-        return mapDrafter.draw(lowerLeft, upperRight);
+        return MapDrafter.draw(lowerLeft, upperRight);
     }
 }
