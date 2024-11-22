@@ -101,7 +101,7 @@ class Vector2dTest {
         Vector2d v2 = new Vector2d(4, 1);
         Vector2d expected = new Vector2d(2, 1);
 
-        assertEquals(expected, v1.lowerRight(v2));
+        assertEquals(expected, v1.lowerLeft(v2));
     }
 
     @Test

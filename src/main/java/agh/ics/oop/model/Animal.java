@@ -1,16 +1,8 @@
 package agh.ics.oop.model;
 
-public class Animal {
+public class Animal implements WorldElement{
     private MapDirection orientation;
     private Vector2d position;
-
-/*
-Po zmianie kodu stało sie niepotrzebne
-    private final Vector2d UP = new Vector2d(0, 1);
-    private final Vector2d DOWN = new Vector2d(0, -1);
-    private final Vector2d RIGHT = new Vector2d(1, 0);
-    private final Vector2d LEFT = new Vector2d(-1, 0);
-*/
 
     public Animal()
     {
