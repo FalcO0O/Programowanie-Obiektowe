@@ -45,5 +45,5 @@ public interface WorldMap extends MoveValidator {
      */
     WorldElement objectAt(Vector2d position);
 
-    public ArrayList<WorldElement> getElements();
+    ArrayList<WorldElement> getElements();
 }
