@@ -4,14 +4,32 @@ import agh.ics.oop.model.util.MapVisualizer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractWorldMap implements WorldMap {
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
-    protected final MapVisualizer MapDrafter = new MapVisualizer(this);
-    public void place(Animal animal) {
+    private final MapVisualizer MapDrafter = new MapVisualizer(this);
+    private final List<MapChangeListener> observers = new ArrayList<>();
+
+    public void addObserver(MapChangeListener observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(MapChangeListener observer) {
+        observers.remove(observer);
+    }
+
+    protected void mapChanged(String message) {
+        for (MapChangeListener observer : observers) {
+            observer.mapChanged(this, message);
+        }
+    }
+
+    public void place(Animal animal) throws IncorrectPositionException {
         if (canMoveTo(animal.getPosition())) {
             animals.put(animal.getPosition(), animal);
+            mapChanged("place");
         }
         else throw new IncorrectPositionException(animal.getPosition());
     }
@@ -29,6 +47,7 @@ public abstract class AbstractWorldMap implements WorldMap {
             }
             default -> {throw new RuntimeException("Wartość nie powinna istnieć!");}
         }
+        mapChanged("move");
     }
 
     public boolean isOccupied(Vector2d position) {
@@ -42,6 +61,13 @@ public abstract class AbstractWorldMap implements WorldMap {
     @Override
     public WorldElement objectAt(Vector2d position) {
         return animals.get(position);
+    }
+
+    public abstract Boundary getCurrentBounds();
+
+    public final String toString() { // final bc no other class should override it
+        Boundary bounds = getCurrentBounds();
+        return MapDrafter.draw(bounds.lowerLeft(), bounds.upperRight());
     }
 
     public ArrayList<WorldElement> getElements()

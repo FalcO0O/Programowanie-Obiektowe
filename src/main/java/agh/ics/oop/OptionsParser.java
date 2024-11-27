@@ -1,7 +1,6 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.MoveDirection;
-
 import java.util.LinkedList;
 import java.util.List;
 

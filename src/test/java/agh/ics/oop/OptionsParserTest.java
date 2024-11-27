@@ -20,31 +20,25 @@ class OptionsParserTest {
     @Test
     void parseWithInvalidDirections() {
         String[] input = {"f", "x", "b", "abc", "l"};
-        List<MoveDirection> expected = List.of(MoveDirection.FORWARD, MoveDirection.BACKWARD, MoveDirection.LEFT);
-        assertEquals(expected, parseMoveDirections(input));
+        assertThrows(IllegalArgumentException.class, () -> parseMoveDirections(input), "Invalid directions should throw an exception");
     }
 
     @Test
     void parseAllInvalidDirections() {
         String[] input = {"x", "y", "abcb", "esaw"};
-        List<MoveDirection> expected = new ArrayList<>();
-
-        assertEquals(expected, parseMoveDirections(input));
+        assertThrows(IllegalArgumentException.class, () -> parseMoveDirections(input), "All invalid directions should throw an exception");
     }
 
     @Test
     void parseEmptyArray() {
         String[] input = {};
         List<MoveDirection> expected = new ArrayList<>();
-
         assertEquals(expected, parseMoveDirections(input));
     }
 
     @Test
     void parseWithMixedCase() {
         String[] input = {"F", "b", "L", "R"};
-        List<MoveDirection> expected = List.of(MoveDirection.BACKWARD);
-
-        assertEquals(expected, parseMoveDirections(input));
+        assertThrows(IllegalArgumentException.class, () -> parseMoveDirections(input), "Mixed case invalid directions should throw an exception");
     }
 }
