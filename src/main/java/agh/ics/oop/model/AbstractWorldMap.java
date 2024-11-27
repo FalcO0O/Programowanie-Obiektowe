@@ -9,11 +9,12 @@ import java.util.Map;
 public abstract class AbstractWorldMap implements WorldMap {
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
     protected final MapVisualizer MapDrafter = new MapVisualizer(this);
-    public void place(Animal animal) {
+    public boolean place(Animal animal) {
         if (canMoveTo(animal.getPosition())) {
             animals.put(animal.getPosition(), animal);
+            return true;
         }
-        else throw new IncorrectPositionException(animal.getPosition());
+        return false;
     }
 
     public void move(Animal animal, MoveDirection direction) {
