@@ -9,6 +9,7 @@ import java.util.Map;
 
 public abstract class AbstractWorldMap implements WorldMap {
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
+
     private final MapVisualizer MapDrafter = new MapVisualizer(this);
     private final List<MapChangeListener> observers = new ArrayList<>();
 
@@ -30,8 +31,9 @@ public abstract class AbstractWorldMap implements WorldMap {
         if (canMoveTo(animal.getPosition())) {
             animals.put(animal.getPosition(), animal);
             mapChanged("place");
+
         }
-        else throw new IncorrectPositionException(animal.getPosition());
+        return false;
     }
 
     public void move(Animal animal, MoveDirection direction) {
