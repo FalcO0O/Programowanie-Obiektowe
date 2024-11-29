@@ -31,9 +31,10 @@ public abstract class AbstractWorldMap implements WorldMap {
         if (canMoveTo(animal.getPosition())) {
             animals.put(animal.getPosition(), animal);
             mapChanged("place");
-
         }
-        return false;
+        else {
+            throw new IncorrectPositionException(animal.getPosition());
+        }
     }
 
     public void move(Animal animal, MoveDirection direction) {
@@ -57,7 +58,7 @@ public abstract class AbstractWorldMap implements WorldMap {
     }
 
     public boolean canMoveTo(Vector2d position) {
-        return !(objectAt(position) instanceof Animal); // jedynie ten warunek jest wspólny dla obu klas dziedziczących
+        return !(objectAt(position) instanceof Animal);
     }
 
     @Override
