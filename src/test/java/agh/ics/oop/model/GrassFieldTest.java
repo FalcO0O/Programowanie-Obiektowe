@@ -21,7 +21,7 @@ class GrassFieldTest {
     @Test
     void placeAnimalOnEmptyPosition() {
         Animal animal = new Animal(new Vector2d(1, 1));
-        assertTrue(map.place(animal), "Animal should be at (1,1)");
+        assertDoesNotThrow(() -> map.place(animal), "Animal should be placed at (1,1)");
         assertEquals(animal, map.objectAt(new Vector2d(1, 1)), "Animal should be accessible at (1,1)");
     }
 
@@ -31,7 +31,7 @@ class GrassFieldTest {
         Vector2d grassPosition = grasses.keySet().iterator().next();
         Animal animal = new Animal(grassPosition);
 
-        assertTrue(map.place(animal), "Animal should be placed on a position occupied by grass");
+        assertDoesNotThrow(() -> map.place(animal), "Animal should be placed on a position occupied by grass");
         assertEquals(animal, map.objectAt(grassPosition), "Animal should be placed on top of grass");
     }
 
@@ -40,8 +40,8 @@ class GrassFieldTest {
         Animal animal1 = new Animal(new Vector2d(2, 2));
         Animal animal2 = new Animal(new Vector2d(2, 2));
 
-        assertTrue(map.place(animal1), "Animal1 should be placed at (2,2)");
-        assertFalse(map.place(animal2), "Animal2 should not be placed at the same position as Animal1");
+        assertDoesNotThrow(() -> map.place(animal1), "Animal1 should be placed at (2,2)");
+        assertThrows(IncorrectPositionException.class, () -> map.place(animal2), "Animal2 should not be placed at the same position as Animal1");
         assertEquals(animal1, map.objectAt(new Vector2d(2, 2)), "Only Animal1 should remain at (2,2)");
     }
 
@@ -50,7 +50,7 @@ class GrassFieldTest {
         Map<Vector2d, Grass> grasses = map.getGrasses();
         Vector2d grassPosition = grasses.keySet().iterator().next();
         Animal animal = new Animal(grassPosition.add(new Vector2d(0, 1)));
-        map.place(animal);
+        assertDoesNotThrow(() -> map.place(animal), "Animal should not be placed on the map at (0,1)");
         map.move(animal, MoveDirection.BACKWARD);
         assertEquals(grassPosition, animal.getPosition(), "Animal should move onto the position of the grass");
         assertEquals(animal, map.objectAt(grassPosition), "Animal should occupy the position of the grass");
@@ -61,8 +61,8 @@ class GrassFieldTest {
         Animal animal1 = new Animal(new Vector2d(2, 2));
         Animal animal2 = new Animal(new Vector2d(2, 3));
 
-        map.place(animal1);
-        map.place(animal2);
+        assertDoesNotThrow(() -> map.place(animal1), "Animal should be placed on the map at (2,2)");
+        assertDoesNotThrow(() -> map.place(animal2), "Animal should be placed on the map at (2,3)");
 
         map.move(animal1, MoveDirection.FORWARD);
         assertEquals(new Vector2d(2, 2), animal1.getPosition(), "Animal1 should not move onto Animal2's position");
@@ -76,7 +76,7 @@ class GrassFieldTest {
 
         grasses.put(grassPosition, new Grass(grassPosition));
         Animal animal = new Animal(grassPosition);
-        map.place(animal);
+        assertDoesNotThrow(() -> map.place(animal), "Animal should be placed on the map at (4,4)");
         assertTrue(map.isOccupied(grassPosition), "Position (4,4) should be occupied");
         assertEquals(animal, map.objectAt(grassPosition), "Animal should take priority over grass");
     }

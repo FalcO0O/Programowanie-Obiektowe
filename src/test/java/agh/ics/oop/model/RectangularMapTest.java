@@ -10,7 +10,7 @@ class RectangularMapTest { // stare testy dalej działają z interfejsem WorldMa
     void placeAnimal() {
         RectangularMap map = new RectangularMap(5, 5);
         Animal animal = new Animal(new Vector2d(1,1));
-        assertTrue(map.place(animal), "Animal should be placed on the map at (1,1)");
+        assertDoesNotThrow(() -> map.place(animal), "Animal should be placed on the map at (1,1)");
         assertEquals(animal, map.objectAt(new Vector2d(1, 1)), "Animal should be accessible at (1,1)");
     }
 
@@ -19,15 +19,15 @@ class RectangularMapTest { // stare testy dalej działają z interfejsem WorldMa
         RectangularMap map = new RectangularMap(5, 5);
         Animal animal1 = new Animal(new Vector2d(1, 1));
         Animal animal2 = new Animal(new Vector2d(1, 1));
-        map.place(animal1);
-        assertFalse(map.place(animal2), "Should not place another animal at (1,1)");
+        assertDoesNotThrow(() -> map.place(animal1));
+        assertThrows(IncorrectPositionException.class, () -> map.place(animal2), "Should not place another animal at (1,1)");
     }
 
     @Test
     void moveAnimalWithinBounds() {
         RectangularMap map = new RectangularMap(5, 5);
         Animal animal = new Animal(new Vector2d(2, 2));
-        map.place(animal);
+        assertDoesNotThrow(() -> map.place(animal), "Animal should be placed at (2,2)");
         map.move(animal, MoveDirection.FORWARD);
         assertEquals(new Vector2d(2, 3), animal.getPosition(), "Animal should move to (2,3)");
     }
@@ -37,7 +37,7 @@ class RectangularMapTest { // stare testy dalej działają z interfejsem WorldMa
     void isOccupied() {
         RectangularMap map = new RectangularMap(5, 5);
         Animal animal = new Animal(new Vector2d(2, 2));
-        map.place(animal);
+        assertDoesNotThrow(() -> map.place(animal), "Animal should be placed at (2,2)");
         assertTrue(map.isOccupied(new Vector2d(2, 2)), "Position (2,2) should be occupied");
     }
 
@@ -57,7 +57,7 @@ class RectangularMapTest { // stare testy dalej działają z interfejsem WorldMa
     void moveAnimalLeftAndRight() {
         RectangularMap map = new RectangularMap(5, 5);
         Animal animal = new Animal(new Vector2d(2, 2));
-        map.place(animal);
+        assertDoesNotThrow(() -> map.place(animal), "Animal should be placed at (2,2)");
         map.move(animal, MoveDirection.LEFT);
         assertEquals(MapDirection.WEST, animal.getOrientation(), "Animal should turn LEFT to face WEST");
         map.move(animal, MoveDirection.RIGHT);
@@ -69,8 +69,8 @@ class RectangularMapTest { // stare testy dalej działają z interfejsem WorldMa
         RectangularMap map = new RectangularMap(5, 5);
         Animal animal1 = new Animal(new Vector2d(2, 2));
         Animal animal2 = new Animal(new Vector2d(2, 3));
-        map.place(animal1);
-        map.place(animal2);
+        assertDoesNotThrow(() -> map.place(animal1), "Animal should be placed at (2,2)");
+        assertDoesNotThrow(() -> map.place(animal2), "Animal should be placed at (2,2)");
         map.move(animal1, MoveDirection.FORWARD); // Try moving animal1 into animal2's position
         assertEquals(new Vector2d(2, 2), animal1.getPosition(), "Animal1 should not move into an occupied position");
     }
@@ -81,9 +81,9 @@ class RectangularMapTest { // stare testy dalej działają z interfejsem WorldMa
         Animal animal1 = new Animal(new Vector2d(1, 1));
         Animal animal2 = new Animal(new Vector2d(3, 3));
         Animal animal3 = new Animal(new Vector2d(4, 4));
-        map.place(animal1);
-        map.place(animal2);
-        map.place(animal3);
+        assertDoesNotThrow(() -> map.place(animal1), "Animal should be placed at (2,2)");
+        assertDoesNotThrow(() -> map.place(animal2), "Animal should be placed at (2,2)");
+        assertDoesNotThrow(() -> map.place(animal3), "Animal should be placed at (2,2)");
         assertTrue(map.isOccupied(new Vector2d(1, 1)), "Position (1,1) should be occupied by animal1");
         assertTrue(map.isOccupied(new Vector2d(3, 3)), "Position (3,3) should be occupied by animal2");
         assertTrue(map.isOccupied(new Vector2d(4, 4)), "Position (4,4) should be occupied by animal3");

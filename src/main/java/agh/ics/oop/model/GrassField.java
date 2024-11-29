@@ -1,7 +1,6 @@
 package agh.ics.oop.model;
 
 import agh.ics.oop.model.util.RandomPositionGenerator;
-
 import java.util.*;
 
 public class GrassField extends AbstractWorldMap {
@@ -27,7 +26,7 @@ public class GrassField extends AbstractWorldMap {
     }
 
     @Override
-    public String toString() {
+    public Boundary getCurrentBounds() {
         Vector2d upperRight = new Vector2d(-Integer.MAX_VALUE, -Integer.MAX_VALUE);
         Vector2d lowerLeft = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
 
@@ -40,8 +39,7 @@ public class GrassField extends AbstractWorldMap {
             lowerLeft = lowerLeft.lowerLeft(vector);
             upperRight = upperRight.upperRight(vector);
         }
-
-        return MapDrafter.draw(lowerLeft, upperRight);
+        return new Boundary(lowerLeft, upperRight);
     }
 
     @Override
@@ -54,5 +52,6 @@ public class GrassField extends AbstractWorldMap {
     Map<Vector2d, Grass> getGrasses() { // package private do testów
         return grasses;
     }
+
 }
 
