@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 public class SimulationEngine {
     private final ArrayList<Simulation> simulationsList = new ArrayList<>();
     private final ArrayList<Thread> threadsList = new ArrayList<>();
-    private ExecutorService executor;
+    private ExecutorService executor = null;
 
     public SimulationEngine(ArrayList<Simulation> simulations) {
         this.simulationsList.addAll(simulations);
