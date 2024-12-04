@@ -57,7 +57,7 @@ public class SimulationEngine {
     }
 
     public void runAsyncInThreadPool() {
-        executor = Executors.newFixedThreadPool(4); // Przechowywanie odniesienia do puli wątków
+        executor = Executors.newFixedThreadPool(4);
         for (Simulation simulation : simulationsList) {
             executor.submit(simulation);
         }
