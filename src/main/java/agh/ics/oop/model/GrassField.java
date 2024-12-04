@@ -7,6 +7,7 @@ public class GrassField extends AbstractWorldMap {
     private final Map<Vector2d, Grass> grasses = new HashMap<>();
 
     public GrassField(int grassFieldsNum) {
+        super(UUID.randomUUID()); // na tyle mała szansa na powtórzenie się ID że nie sprawdzam czy został już użyty
         int maxWidthAndHeight = (int) Math.ceil(Math.sqrt(10*grassFieldsNum));
 
         RandomPositionGenerator randomPositionGenerator = new RandomPositionGenerator(maxWidthAndHeight, maxWidthAndHeight, grassFieldsNum);
