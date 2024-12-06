@@ -26,7 +26,13 @@ public class World {
             }
             SimulationEngine Engine = new SimulationEngine(simulations);
             Engine.runAsyncInThreadPool();
-            Engine.awaitSimulationsEnd();
+            try
+            {
+                Engine.awaitSimulationsEnd();
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());;
+            }
+
         } catch (IllegalArgumentException e)
         {
             System.out.println(e.getMessage());

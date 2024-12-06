@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 public class SimulationEngine {
     private final ArrayList<Simulation> simulationsList = new ArrayList<>();
     private final ArrayList<Thread> threadsList = new ArrayList<>();
-    private ExecutorService executor = null;
+    private final ExecutorService executor = Executors.newFixedThreadPool(4);
 
     public SimulationEngine(ArrayList<Simulation> simulations) {
         this.simulationsList.addAll(simulations);
@@ -31,33 +31,26 @@ public class SimulationEngine {
         }
     }
 
-    public void awaitSimulationsEnd()
+    public void awaitSimulationsEnd() throws InterruptedException
     {
         for(Thread thread : threadsList)
         {
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                System.out.println(e.getMessage());
-            }
+            thread.join();
         }
 
-        if(executor != null)
-        {
-            executor.shutdown();
-            try {
-                if (!executor.awaitTermination(10, TimeUnit.SECONDS)) {
-                    executor.shutdownNow();
-                }
-            } catch (InterruptedException e) {
-                System.out.println(e.getMessage());
+        executor.shutdown();
+        try {
+            if (!executor.awaitTermination(10, TimeUnit.SECONDS)) {
                 executor.shutdownNow();
             }
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
+            executor.shutdownNow();
         }
+
     }
 
     public void runAsyncInThreadPool() {
-        executor = Executors.newFixedThreadPool(4);
         for (Simulation simulation : simulationsList) {
             executor.submit(simulation);
         }
