@@ -1,6 +1,7 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.*;
+import javafx.application.Application;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,35 +9,36 @@ import java.util.List;
 public class World {
 
     public static void main(String[] args) {
-        ConsoleMapDisplay console = new ConsoleMapDisplay();
-        List<MoveDirection> directions;
-        try
-        {
-            directions = OptionsParser.parseMoveDirections(args);
-            List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
-            ArrayList<Simulation> simulations = new ArrayList<>();
-            for (int i = 0; i < 1000; i++)
-            {
-                GrassField grassMap = new GrassField(10);
-                RectangularMap rectangularMap = new RectangularMap(10, 10);
-                grassMap.addObserver(console);
-                rectangularMap.addObserver(console);
-                simulations.add(new Simulation(positions, directions, grassMap));
-                simulations.add(new Simulation(positions, directions, rectangularMap));
-            }
-            SimulationEngine Engine = new SimulationEngine(simulations);
-            Engine.runAsyncInThreadPool();
-            try
-            {
-                Engine.awaitSimulationsEnd();
-            } catch (InterruptedException e) {
-                System.out.println(e.getMessage());;
-            }
-
-        } catch (IllegalArgumentException e)
-        {
-            System.out.println(e.getMessage());
-        }
-        System.out.println("System finished running.");
+//        ConsoleMapDisplay console = new ConsoleMapDisplay();
+//        List<MoveDirection> directions;
+//        try
+//        {
+//            directions = OptionsParser.parseMoveDirections(args);
+//            List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
+//            ArrayList<Simulation> simulations = new ArrayList<>();
+//            for (int i = 0; i < 1000; i++)
+//            {
+//                GrassField grassMap = new GrassField(10);
+//                RectangularMap rectangularMap = new RectangularMap(10, 10);
+//                grassMap.addObserver(console);
+//                rectangularMap.addObserver(console);
+//                simulations.add(new Simulation(positions, directions, grassMap));
+//                simulations.add(new Simulation(positions, directions, rectangularMap));
+//            }
+//            SimulationEngine Engine = new SimulationEngine(simulations);
+//            Engine.runAsyncInThreadPool();
+//            try
+//            {
+//                Engine.awaitSimulationsEnd();
+//            } catch (InterruptedException e) {
+//                System.out.println(e.getMessage());;
+//            }
+//
+//        } catch (IllegalArgumentException e)
+//        {
+//            System.out.println(e.getMessage());
+//        }
+//        System.out.println("System finished running.");
+        Application.launch(SimulationApp.class, args);
     }
 }
