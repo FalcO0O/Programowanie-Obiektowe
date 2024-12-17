@@ -1,10 +1,6 @@
 package agh.ics.oop;
 
-import agh.ics.oop.model.*;
 import javafx.application.Application;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class World {
 
@@ -39,6 +35,7 @@ public class World {
 //            System.out.println(e.getMessage());
 //        }
 //        System.out.println("System finished running.");
+
         Application.launch(SimulationApp.class, args);
     }
 }

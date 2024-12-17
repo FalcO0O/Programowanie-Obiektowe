@@ -41,7 +41,10 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     public void move(Animal animal, MoveDirection direction) {
         switch (direction) {
-            case LEFT, RIGHT -> animal.move(direction, this);
+            case LEFT, RIGHT -> {
+                animal.move(direction, this);
+                mapChanged("Zwierze obrócilo sie na " + animal.getOrientation().toString());
+            }
             case FORWARD, BACKWARD -> {
                 Vector2d pos = animal.getPosition();
                 animal.move(direction, this);
@@ -49,10 +52,10 @@ public abstract class AbstractWorldMap implements WorldMap {
                     animals.remove(pos);
                     animals.put(animal.getPosition(), animal);
                 }
+                mapChanged("Zwierze ruszylo sie z pozycji %s na pozycje %s".formatted(pos.toString(), animal.getPosition().toString()));
             }
-            default -> {throw new RuntimeException("Wartość nie powinna istnieć!");}
+            default -> throw new RuntimeException("Wartość nie powinna istnieć!");
         }
-        mapChanged("move");
     }
 
     public boolean isOccupied(Vector2d position) {
