@@ -1,6 +1,5 @@
 package agh.ics.oop;
 
-
 import agh.ics.oop.model.ConsoleMapDisplay;
 import agh.ics.oop.model.GrassField;
 import agh.ics.oop.presenter.SimulationPresenter;

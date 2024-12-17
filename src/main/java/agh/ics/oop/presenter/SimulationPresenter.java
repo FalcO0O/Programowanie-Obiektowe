@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SimulationPresenter implements MapChangeListener {
-    private WorldMap worldMap;
     private final static int CELL_SIZE = 30;
+    private WorldMap worldMap;
     List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4)); // zahardocowane pozycje zwierzaków;
 
     @FXML
@@ -122,7 +122,7 @@ public class SimulationPresenter implements MapChangeListener {
     private void onSimulationStartClicked(ActionEvent actionEvent) {
         String[] stringOfMoves = movesListTextField.getText().split(" ");
         List<MoveDirection> listOfMoves = OptionsParser.parseMoveDirections(stringOfMoves);
-        Simulation simulation = new Simulation(positions, listOfMoves, worldMap); // TODO czy kopia mapy nie powinna być robiona?
+        Simulation simulation = new Simulation(positions, listOfMoves, worldMap);
         SimulationEngine simulationEngine = new SimulationEngine(new ArrayList<>(List.of(simulation)));
         simulationEngine.runAsync();
     }
