@@ -47,7 +47,6 @@ public class SimulationEngine {
             System.out.println(e.getMessage());
             executor.shutdownNow();
         }
-
     }
 
     public void runAsyncInThreadPool() {
@@ -55,6 +54,4 @@ public class SimulationEngine {
             executor.submit(simulation);
         }
     }
-
-
 }

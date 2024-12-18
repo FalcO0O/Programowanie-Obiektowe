@@ -35,14 +35,14 @@ public class Simulation implements Runnable {
     {
         for(int i = 0; i < moveDirectionsList.size(); i++)
         {
-            int animalIndex = i % animalsList.size();
-            world.move(animalsList.get(animalIndex), moveDirectionsList.get(i));
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 System.out.println("Simulation interrupted");
                 Thread.currentThread().interrupt();
             }
+            int animalIndex = i % animalsList.size();
+            world.move(animalsList.get(animalIndex), moveDirectionsList.get(i));
         }
     }
 

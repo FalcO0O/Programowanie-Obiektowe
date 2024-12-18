@@ -19,9 +19,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -55,7 +59,7 @@ public class SimulationPresenter implements MapChangeListener {
         int height = upperRight.getY() - lowerLeft.getY() + 1;
 
         addHeaders(width, height, lowerLeft);
-        addElements(lowerLeft);
+        addElements(lowerLeft, upperRight);
         setupGridConstraints(lowerLeft, upperRight);
         centerGrid();
     }
@@ -94,17 +98,19 @@ public class SimulationPresenter implements MapChangeListener {
         }
     }
 
-    private void addElements(Vector2d lowerLeft) {
+    private void addElements(Vector2d lowerLeft, Vector2d upperRight) {
         worldMap.getElements().forEach(element -> {
             Vector2d position = element.getPosition();
             Label elementLabel = new Label(element.toString());
-            mapGrid.add(elementLabel, position.getX() - lowerLeft.getX() + 1, position.getY() - lowerLeft.getY() + 1);
+            mapGrid.add(elementLabel, Math.abs(position.getX() - lowerLeft.getX()) + 1,
+                    Math.abs(position.getY() - upperRight.getY()) + 1); // w ten sposób działa poprawnie dla ujemnych indeksów na mapie
             GridPane.setHalignment(elementLabel, HPos.CENTER);
         });
     }
 
     private void centerGrid() {
         mapGrid.setAlignment(Pos.CENTER);
+        mapGrid.setGridLinesVisible(true);
     }
 
     private void clearGrid() {
@@ -130,37 +136,61 @@ public class SimulationPresenter implements MapChangeListener {
             try {
                 startNewSimulationWindow(listOfMoves);
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         });
     }
 
+    private void deleteStartButton(Path path) throws IOException { // funkcja usuwa przycisk startu z nowego okna, aby symulacje mogły być odpalane tylko z pierwotnego okienka
+        List<String> newLines = new ArrayList<>();
+        for (String line : Files.readAllLines(path)) {
+            if (line.contains("<Button onAction=\"#onSimulationStartClicked\" >Start</Button>")) {
+                newLines.add(line.replace("<Button onAction=\"#onSimulationStartClicked\" >Start</Button>", ""));
+            } else {
+                newLines.add(line);
+            }
+        }
+        Files.write(path, newLines);
+    }
+
     private void startNewSimulationWindow(List<MoveDirection> moves) throws IOException {
-        
+        Path originalFxmlPath = new File(Objects.requireNonNull(getClass() // taki hack, aby ścieżka była poprawnie odnaleziona (miało problem z ':' w C:/...)
+                        .getResource("/simulation.fxml"))
+                .getFile()).toPath();
+        Path tempFxmlPath = Files.createTempFile("simulation-", ".fxml");
+        tempFxmlPath.toFile().deleteOnExit();
+        Files.copy(originalFxmlPath, tempFxmlPath, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+        deleteStartButton(tempFxmlPath);
+
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource("simulation.fxml"));
+        loader.setLocation(tempFxmlPath.toUri().toURL());
         BorderPane newViewRoot = loader.load();
+
+        ConsoleMapDisplay consoleMapDisplay = new ConsoleMapDisplay();
 
         SimulationPresenter newPresenter = loader.getController();
         GrassField newGrassMap = new GrassField(10);
-        newGrassMap.addObserver(newPresenter);
         newPresenter.setWorldMap(newGrassMap);
+
+        newGrassMap.addObserver(newPresenter);
+        newGrassMap.addObserver(consoleMapDisplay);
 
         Stage newStage = new Stage();
         configureNewStage(newStage, newViewRoot);
+        newStage.show();
 
         simulationExecutor.submit(() -> {
             Simulation simulation = new Simulation(positions, moves, newGrassMap);
             SimulationEngine simulationEngine = new SimulationEngine(new ArrayList<>(List.of(simulation)));
             simulationEngine.runAsync();
         });
-        newStage.show();
     }
 
     private void configureNewStage(Stage stage, BorderPane viewRoot) {
         Scene scene = new Scene(viewRoot);
         stage.setScene(scene);
-        stage.setTitle("Simulation nr " + ++numOfStages);
+        stage.setX(20); // dzięki temu nowe okno nie pokrywa się z pierwotnym
+        stage.setY(20);
+        stage.setTitle("Simulation nr: " + ++numOfStages);
     }
 }
-

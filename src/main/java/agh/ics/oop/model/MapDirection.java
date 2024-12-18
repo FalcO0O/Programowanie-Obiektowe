@@ -54,9 +54,4 @@ public enum MapDirection {
             case WEST -> _WEST;
         };
     }
-
-    public MapDirection Next()
-    {
-        return MapDirection.values()[(this.ordinal() + 1) % 4];
-    }
 }

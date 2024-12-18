@@ -23,4 +23,9 @@ public class SimulationApp extends Application {
         primaryStage.minWidthProperty().bind(viewRoot.minWidthProperty());
         primaryStage.minHeightProperty().bind(viewRoot.minHeightProperty());
     }
+
+    @Override
+    public void stop() {
+        System.exit(0); // quitting console app when closing app window
+    }
 }

@@ -32,7 +32,7 @@ public abstract class AbstractWorldMap implements WorldMap {
     public void place(Animal animal) throws IncorrectPositionException {
         if (canMoveTo(animal.getPosition())) {
             animals.put(animal.getPosition(), animal);
-            mapChanged("place");
+            mapChanged("Animal has been placed at " + animal.getPosition());
         }
         else {
             throw new IncorrectPositionException(animal.getPosition());
