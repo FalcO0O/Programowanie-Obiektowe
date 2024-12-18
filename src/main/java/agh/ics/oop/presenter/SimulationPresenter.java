@@ -166,14 +166,11 @@ public class SimulationPresenter implements MapChangeListener {
         loader.setLocation(tempFxmlPath.toUri().toURL());
         BorderPane newViewRoot = loader.load();
 
-        ConsoleMapDisplay consoleMapDisplay = new ConsoleMapDisplay();
-
         SimulationPresenter newPresenter = loader.getController();
         GrassField newGrassMap = new GrassField(10);
         newPresenter.setWorldMap(newGrassMap);
 
         newGrassMap.addObserver(newPresenter);
-        newGrassMap.addObserver(consoleMapDisplay);
 
         Stage newStage = new Stage();
         configureNewStage(newStage, newViewRoot);
