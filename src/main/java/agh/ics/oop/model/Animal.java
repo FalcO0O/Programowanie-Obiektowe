@@ -1,8 +1,16 @@
 package agh.ics.oop.model;
 
+import javafx.scene.image.Image;
+
 public class Animal implements WorldElement {
     private MapDirection orientation;
     private Vector2d position;
+
+    private final static Image upImage = new Image("/up.png");
+    private final static Image downImage = new Image("/down.png");
+    private final static Image leftImage = new Image("/left.png");
+    private final static Image rightImage = new Image("/right.png");
+
     public Animal()
     {
         position = new Vector2d(2, 2);
@@ -49,13 +57,13 @@ public class Animal implements WorldElement {
     }
 
     @Override
-    public Resources getResource() {
+    public Image getResource() {
         return switch(orientation)
         {
-            case NORTH -> Resources.UP_IMAGE;
-            case SOUTH -> Resources.DOWN_IMAGE;
-            case EAST -> Resources.RIGHT_IMAGE;
-            case WEST -> Resources.LEFT_IMAGE;
+            case NORTH -> upImage;
+            case SOUTH -> downImage;
+            case EAST -> rightImage;
+            case WEST -> leftImage;
         };
     }
 

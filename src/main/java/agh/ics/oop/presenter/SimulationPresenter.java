@@ -11,43 +11,17 @@ import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class SimulationPresenter implements MapChangeListener {
     private final static int CELL_SIZE = 30;
     private WorldMap worldMap;
     private final List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4)); // zahardocowane pozycje zwierzaków;
-
-    private static Image upImage = null; // nie mogłem final ze względu ponieważ musi być zainicjalizowana, a zasoby mogą tego nie zapewnić
-    private static Image downImage = null;
-    private static Image rightImage = null;
-    private static Image leftImage = null;
-    private static Image grassImage = null;
-
-    public SimulationPresenter() {
-        upImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/up.png")));
-        downImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/down.png")));
-        leftImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/left.png")));
-        rightImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/right.png")));
-        grassImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/grass.png")));
-    }
-
-    private Image elementToImage(Resources element) {
-        return switch (element){
-            case UP_IMAGE -> upImage;
-            case DOWN_IMAGE -> downImage;
-            case LEFT_IMAGE -> leftImage;
-            case RIGHT_IMAGE -> rightImage;
-            case GRASS_IMAGE -> grassImage;
-        };
-    }
 
     @FXML
     private Label moveInfoLabel;
@@ -117,7 +91,7 @@ public class SimulationPresenter implements MapChangeListener {
     private void addElements(Vector2d lowerLeft) {
         worldMap.getElements().forEach(element -> {
             Vector2d position = element.getPosition();
-            WorldElementBox elementBox = new WorldElementBox(element, elementToImage(element.getResource()));
+            WorldElementBox elementBox = new WorldElementBox(element);
             mapGrid.add(elementBox, position.getX() - lowerLeft.getX() + 1, position.getY() - lowerLeft.getY() + 1);
             GridPane.setHalignment(elementBox, HPos.CENTER);
         });

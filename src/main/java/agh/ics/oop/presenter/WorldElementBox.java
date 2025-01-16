@@ -3,18 +3,16 @@ package agh.ics.oop.presenter;
 import agh.ics.oop.model.WorldElement;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
-import java.util.Objects;
 
 public class WorldElementBox extends VBox {
 
     private static final int IMAGE_SIZE = 20;
 
-    public WorldElementBox(WorldElement element, Image image) {
-        ImageView imageView = new ImageView(image);
+    public WorldElementBox(WorldElement element) {
+        ImageView imageView = new ImageView(element.getResource());
         imageView.setFitWidth(IMAGE_SIZE);
         imageView.setFitHeight(IMAGE_SIZE);
 
