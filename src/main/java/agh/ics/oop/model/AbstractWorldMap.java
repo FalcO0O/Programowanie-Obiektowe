@@ -3,6 +3,7 @@ package agh.ics.oop.model;
 import agh.ics.oop.model.util.MapVisualizer;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class AbstractWorldMap implements WorldMap {
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
@@ -63,12 +64,13 @@ public abstract class AbstractWorldMap implements WorldMap {
     }
 
     public boolean canMoveTo(Vector2d position) {
-        return !(objectAt(position) instanceof Animal);
+        if(objectAt(position).isPresent()) return !(objectAt(position).get() instanceof Animal);
+        return true;
     }
 
     @Override
-    public WorldElement objectAt(Vector2d position) {
-        return animals.get(position);
+    public Optional<WorldElement> objectAt(Vector2d position) {
+        return Optional.ofNullable(animals.get(position));
     }
 
     public abstract Boundary getCurrentBounds();
@@ -81,6 +83,16 @@ public abstract class AbstractWorldMap implements WorldMap {
     public ArrayList<WorldElement> getElements()
     {
         return new ArrayList<>(animals.values()); // należy stworzyć nową listę, aby oryginalna nie była nadpisana
+    }
+
+    public Collection<Animal> getOrderedAnimals()
+    {
+        return animals.values().stream()
+                .sorted(
+                        Comparator.comparing( (Animal animal) -> animal.getPosition().getX())
+                                .thenComparing((Animal animal) -> animal.getPosition().getY())
+                )
+                .collect(Collectors.toList());
     }
 
     public UUID getID()

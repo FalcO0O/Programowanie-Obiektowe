@@ -2,6 +2,9 @@ package agh.ics.oop.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RectangularMapTest { // stare testy dalej działają z interfejsem WorldMap
@@ -9,9 +12,11 @@ class RectangularMapTest { // stare testy dalej działają z interfejsem WorldMa
     @Test
     void placeAnimal() {
         RectangularMap map = new RectangularMap(5, 5);
-        Animal animal = new Animal(new Vector2d(1,1));
+        Vector2d vector2d = new Vector2d(1,1);
+        Animal animal = new Animal(vector2d);
         assertDoesNotThrow(() -> map.place(animal), "Animal should be placed on the map at (1,1)");
-        assertEquals(animal, map.objectAt(new Vector2d(1, 1)), "Animal should be accessible at (1,1)");
+        assert map.objectAt(vector2d).isPresent();
+        assertEquals(animal, map.objectAt(vector2d).get(), "Animal should be accessible at (1,1)");
     }
 
     @Test
@@ -96,5 +101,22 @@ class RectangularMapTest { // stare testy dalej działają z interfejsem WorldMa
         assertFalse(map.canMoveTo(new Vector2d(0, -1)), "Map should not allow movement outside its lower boundaries");
         assertFalse(map.canMoveTo(new Vector2d(5, 0)), "Map should not allow movement outside its upper boundaries");
         assertFalse(map.canMoveTo(new Vector2d(0, 5)), "Map should not allow movement outside its upper boundaries");
+    }
+
+    @Test
+    void isOrderedCollectionSorted()
+    {
+        RectangularMap map = new RectangularMap(10, 10);
+        Animal animal1 = new Animal(new Vector2d(2, 6));
+        Animal animal2 = new Animal(new Vector2d(3, 9));
+        Animal animal3 = new Animal(new Vector2d(9, 5));
+        Animal animal4 = new Animal(new Vector2d(2, 4));
+        ArrayList<Animal> animalsToPlace = new ArrayList<>(List.of(animal1, animal2, animal3, animal4));
+        animalsToPlace.forEach(
+                animal -> assertDoesNotThrow(
+                        () -> map.place(animal), "Error while placing animals"
+                ));
+
+        assertEquals(map.getOrderedAnimals(), List.of(animal4, animal1, animal2, animal3));
     }
 }

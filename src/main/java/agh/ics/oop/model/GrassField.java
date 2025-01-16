@@ -1,7 +1,10 @@
 package agh.ics.oop.model;
 
 import agh.ics.oop.model.util.RandomPositionGenerator;
+
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GrassField extends AbstractWorldMap {
     private final Map<Vector2d, Grass> grasses = new HashMap<>();
@@ -22,9 +25,11 @@ public class GrassField extends AbstractWorldMap {
     }
 
     @Override
-    public WorldElement objectAt(Vector2d position) {
-        return (super.objectAt(position) == null) ? grasses.get(position) : super.objectAt(position);
+    public Optional<WorldElement> objectAt(Vector2d position) {
+        return super.objectAt(position)
+                .or(() -> Optional.ofNullable(grasses.get(position)));
     }
+
 
     @Override
     public Boundary getCurrentBounds() {
@@ -45,9 +50,11 @@ public class GrassField extends AbstractWorldMap {
 
     @Override
     public ArrayList<WorldElement> getElements() {
-        ArrayList<WorldElement> elements = new ArrayList<>(super.getElements());
-        elements.addAll(grasses.values());
-        return elements;
+        return Stream.concat(
+                        super.getElements().stream(),
+                        grasses.values().stream()
+                )
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     Map<Vector2d, Grass> getGrasses() { // package private do testów

@@ -1,21 +1,22 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.MoveDirection;
+
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class OptionsParser {
     public static List<MoveDirection> parseMoveDirections(String[] moveDirection) {
-        List<MoveDirection> moveDirections = new LinkedList<>(); // ze względu na częste dopisywanie lepszym wyborem jest LinkedList
-        for (String direction : moveDirection) {
-            switch (direction) {
-                case "f" -> moveDirections.add(MoveDirection.FORWARD);
-                case "r" -> moveDirections.add(MoveDirection.RIGHT);
-                case "l" -> moveDirections.add(MoveDirection.LEFT);
-                case "b" -> moveDirections.add(MoveDirection.BACKWARD);
-                default -> throw new IllegalArgumentException(direction + " is not legal move specification");
-            }
-        }
-        return moveDirections;
+        return Stream.of(moveDirection).map((direction) ->
+                switch (direction) {
+                    case "f" -> MoveDirection.FORWARD;
+                    case "r" -> MoveDirection.RIGHT;
+                    case "l" -> MoveDirection.LEFT;
+                    case "b" -> MoveDirection.BACKWARD;
+                    default -> throw new IllegalArgumentException(direction + " is not legal move specification");
+                }
+                ).collect(Collectors.toCollection(LinkedList::new));
     }
 }

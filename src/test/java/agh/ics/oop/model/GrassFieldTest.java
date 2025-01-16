@@ -4,8 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,9 +20,11 @@ class GrassFieldTest {
 
     @Test
     void placeAnimalOnEmptyPosition() {
-        Animal animal = new Animal(new Vector2d(1, 1));
+        Vector2d vector2d = new Vector2d(1,1);
+        Animal animal = new Animal(vector2d);
         assertDoesNotThrow(() -> map.place(animal), "Animal should be placed at (1,1)");
-        assertEquals(animal, map.objectAt(new Vector2d(1, 1)), "Animal should be accessible at (1,1)");
+        assert map.objectAt(vector2d).isPresent();
+        assertEquals(animal, map.objectAt(vector2d).get(), "Animal should be accessible at (1,1)");
     }
 
     @Test
@@ -32,17 +34,20 @@ class GrassFieldTest {
         Animal animal = new Animal(grassPosition);
 
         assertDoesNotThrow(() -> map.place(animal), "Animal should be placed on a position occupied by grass");
-        assertEquals(animal, map.objectAt(grassPosition), "Animal should be placed on top of grass");
+        assert map.objectAt(grassPosition).isPresent();
+        assertEquals(animal, map.objectAt(grassPosition).get(), "Animal should be placed on top of grass");
     }
 
     @Test
     void cannotPlaceAnimalOnAnotherAnimal() {
-        Animal animal1 = new Animal(new Vector2d(2, 2));
-        Animal animal2 = new Animal(new Vector2d(2, 2));
+        Vector2d vector = new Vector2d(2, 2);
+        Animal animal1 = new Animal(vector);
+        Animal animal2 = new Animal(vector);
 
         assertDoesNotThrow(() -> map.place(animal1), "Animal1 should be placed at (2,2)");
         assertThrows(IncorrectPositionException.class, () -> map.place(animal2), "Animal2 should not be placed at the same position as Animal1");
-        assertEquals(animal1, map.objectAt(new Vector2d(2, 2)), "Only Animal1 should remain at (2,2)");
+        assert map.objectAt(vector).isPresent();
+        assertEquals(animal1, map.objectAt(vector).get(), "Only Animal1 should remain at (2,2)");
     }
 
     @Test
@@ -53,7 +58,8 @@ class GrassFieldTest {
         assertDoesNotThrow(() -> map.place(animal), "Animal should not be placed on the map at (0,1)");
         map.move(animal, MoveDirection.BACKWARD);
         assertEquals(grassPosition, animal.getPosition(), "Animal should move onto the position of the grass");
-        assertEquals(animal, map.objectAt(grassPosition), "Animal should occupy the position of the grass");
+        assert map.objectAt(grassPosition).isPresent();
+        assertEquals(animal, map.objectAt(grassPosition).get(), "Animal should occupy the position of the grass");
     }
 
     @Test
@@ -78,7 +84,8 @@ class GrassFieldTest {
         Animal animal = new Animal(grassPosition);
         assertDoesNotThrow(() -> map.place(animal), "Animal should be placed on the map at (4,4)");
         assertTrue(map.isOccupied(grassPosition), "Position (4,4) should be occupied");
-        assertEquals(animal, map.objectAt(grassPosition), "Animal should take priority over grass");
+        assert map.objectAt(grassPosition).isPresent();
+        assertEquals(animal, map.objectAt(grassPosition).get(), "Animal should take priority over grass");
     }
 
     @Test
@@ -91,5 +98,21 @@ class GrassFieldTest {
             }
         }
         assertEquals(10, grassCount, "GrassField should contain exactly 10 grass elements");
+    }
+
+    @Test
+    void isOrderedCollectionSorted()
+    {
+        Animal animal1 = new Animal(new Vector2d(2, 6));
+        Animal animal2 = new Animal(new Vector2d(3, 9));
+        Animal animal3 = new Animal(new Vector2d(9, 5));
+        Animal animal4 = new Animal(new Vector2d(2, 4));
+        ArrayList<Animal> animalsToPlace = new ArrayList<>(List.of(animal1, animal2, animal3, animal4));
+        animalsToPlace.forEach(
+                animal -> assertDoesNotThrow(
+                        () -> map.place(animal), "Error while placing animals"
+                ));
+
+        assertEquals(map.getOrderedAnimals(), List.of(animal4, animal1, animal2, animal3));
     }
 }
