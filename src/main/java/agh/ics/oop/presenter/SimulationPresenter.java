@@ -25,7 +25,7 @@ public class SimulationPresenter implements MapChangeListener {
     private WorldMap worldMap;
     private final List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4)); // zahardocowane pozycje zwierzaków;
 
-    private static Image upImage = null;
+    private static Image upImage = null; // nie mogłem final ze względu ponieważ musi być zainicjalizowana, a zasoby mogą tego nie zapewnić
     private static Image downImage = null;
     private static Image rightImage = null;
     private static Image leftImage = null;
