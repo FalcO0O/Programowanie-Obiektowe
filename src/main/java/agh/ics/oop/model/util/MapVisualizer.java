@@ -75,7 +75,7 @@ public class MapVisualizer {
 
     private String drawObject(Vector2d currentPosition) {
         if (this.map.isOccupied(currentPosition)) {
-            Object object = this.map.objectAt(currentPosition);
+            Object object = this.map.objectAt(currentPosition).get(); // tutaj też należało zmienić, inaczej w konsoli wyświetlało się Optional
             if (object != null) {
                 return object.toString();
             }

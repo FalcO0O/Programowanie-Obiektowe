@@ -6,6 +6,8 @@ public interface WorldElement {
      */
     Vector2d getPosition();
 
+    String getResourceName();
+
     /**
      * @return String representation of particular object
      */

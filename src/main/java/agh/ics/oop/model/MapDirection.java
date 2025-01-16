@@ -6,9 +6,9 @@ public enum MapDirection {
     WEST,
     EAST;
 
-    static final private Vector2d _NORTH = new Vector2d(0, 1);
+    static final private Vector2d _NORTH = new Vector2d(0, -1);
     static final private Vector2d _EAST = new Vector2d(1, 0);
-    static final private Vector2d _SOUTH = new Vector2d(0, -1);
+    static final private Vector2d _SOUTH = new Vector2d(0, 1);
     static final private Vector2d _WEST = new Vector2d(-1, 0);
 
     @Override
