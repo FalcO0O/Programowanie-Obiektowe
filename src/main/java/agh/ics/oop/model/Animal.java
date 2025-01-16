@@ -49,13 +49,13 @@ public class Animal implements WorldElement {
     }
 
     @Override
-    public String getResourceName() {
+    public Resources getResource() {
         return switch(orientation)
         {
-            case NORTH -> "up.png";
-            case SOUTH -> "down.png";
-            case EAST -> "right.png";
-            case WEST -> "left.png";
+            case NORTH -> Resources.UP_IMAGE;
+            case SOUTH -> Resources.DOWN_IMAGE;
+            case EAST -> Resources.RIGHT_IMAGE;
+            case WEST -> Resources.LEFT_IMAGE;
         };
     }
 

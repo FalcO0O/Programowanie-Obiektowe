@@ -13,10 +13,7 @@ public class WorldElementBox extends VBox {
 
     private static final int IMAGE_SIZE = 20;
 
-    public WorldElementBox(WorldElement element) {
-        String resourcePath = "/" + element.getResourceName(); // nie zdaje sobie Pan sprawy ile mi zeszło aby odnaleźć to "/" :(
-        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(resourcePath)));
-
+    public WorldElementBox(WorldElement element, Image image) {
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(IMAGE_SIZE);
         imageView.setFitHeight(IMAGE_SIZE);
