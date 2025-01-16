@@ -6,10 +6,10 @@ public class Animal implements WorldElement {
     private MapDirection orientation;
     private Vector2d position;
 
-    private final static Image upImage = new Image("/up.png");
-    private final static Image downImage = new Image("/down.png");
-    private final static Image leftImage = new Image("/left.png");
-    private final static Image rightImage = new Image("/right.png");
+    private final static Image UP_IMAGE = new Image("/up.png");
+    private final static Image DOWN_IMAGE = new Image("/down.png");
+    private final static Image LEFT_IMAGE = new Image("/left.png");
+    private final static Image RIGHT_IMAGE = new Image("/right.png");
 
     public Animal()
     {
@@ -60,10 +60,10 @@ public class Animal implements WorldElement {
     public Image getResource() {
         return switch(orientation)
         {
-            case NORTH -> upImage;
-            case SOUTH -> downImage;
-            case EAST -> rightImage;
-            case WEST -> leftImage;
+            case NORTH -> UP_IMAGE;
+            case SOUTH -> DOWN_IMAGE;
+            case EAST -> RIGHT_IMAGE;
+            case WEST -> LEFT_IMAGE;
         };
     }
 
