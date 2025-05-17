@@ -1,6 +1,10 @@
-# PO_2024_PT0945_LUDWIN
+# Programowanie Obiektowe – Projekt
 
-Bartosz Ludwin
-Grupa 3, 9:45
-Quiz11
-https://gitexercises.fracz.com/committer/d8ec2be01f0da3bc28cddb2f435d9f8468e791c6
+Repozytorium zawiera projekt zrealizowany w ramach kursu  
+**Programowanie Obiektowe** na kierunku **Informatyka** na **AGH**.
+
+Celem projektu była implementacja obiektowej symulacji procesów ewolucyjnych – z wykorzystaniem mechanizmów charakterystycznych dla języka **Java** oraz stworzeniem UI wykorzystiując JavaFX.
+
+Projekt powstał we współpracy z [@lythx](https://github.com/lythx),  
+na podstawie założeń dostępnych w repozytorium kursu:  
+📎 [github.com/Soamid/obiektowe-lab](https://github.com/Soamid/obiektowe-lab)
