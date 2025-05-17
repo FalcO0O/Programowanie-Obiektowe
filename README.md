@@ -1,6 +1,5 @@
-# PO_2024_PT0945_LUDWIN
+# Programowanie Obiektowe
 
-Bartosz Ludwin
-Grupa 3, 9:45
-Quiz11
-https://gitexercises.fracz.com/committer/d8ec2be01f0da3bc28cddb2f435d9f8468e791c6
+Repozytorium zawiera rozwiązania zadań realizowanych w ramach kursu **Programowanie Obiektowe**, prowadzonego na kierunku **Informatyka** na **AGH**.  
+Kurs koncentruje się na wprowadzeniu do paradygmatu programowania obiektowego oraz omówieniu mechanizmów charakterystycznych dla języka **Java**, takich jak klasy, dziedziczenie, polimorfizm, interfejsy czy wyjątki.  
+Zadania były realizowane na podstawie poleceń udostępnionych w repozytorium: [Soamid/obiektowe-lab](https://github.com/Soamid/obiektowe-lab).
