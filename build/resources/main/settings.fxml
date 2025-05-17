@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            minHeight="550.0" minWidth="850.0"
+            fx:controller="agh.ics.oop.presenter.SettingsPresenter">
+    <center>
+        <GridPane fx:id="grid" hgap="20" vgap="3" alignment="CENTER">
+            <Label>Map width</Label>
+            <TextField fx:id="mapWidth"> </TextField>
+            <Label>Map height</Label>
+            <TextField fx:id="mapHeight"> </TextField>
+            <Label>Map variant</Label>
+            <ComboBox fx:id="mapVariant" minWidth="200"> </ComboBox>
+            <Label>Fire interval:</Label>
+            <TextField fx:id="fireInterval"> </TextField>
+            <Label>Fire duration:</Label>
+            <TextField fx:id="fireDuration"> </TextField>
+            <Label>Initial plants number</Label>
+            <TextField fx:id="initialPlantsNumber"> </TextField>
+            <Label>Energy on plant consumption</Label>
+            <TextField fx:id="energyOnConsumption"> </TextField>
+            <Label>Daily new plants number</Label>
+            <TextField fx:id="dailyNewPlantsNumber"> </TextField>
+            <Label>Initial animals number</Label>
+            <TextField fx:id="initialAnimalsNumber"> </TextField>
+            <Label>Initial animal energy</Label>
+            <TextField fx:id="initialAnimalEnergy"> </TextField>
+            <Label>Energy required for reproduction</Label>
+            <TextField fx:id="energyRequiredForReproduction"> </TextField>
+            <Label>Energy lost on reproduction</Label>
+            <TextField fx:id="energyLostOnReproduction"> </TextField>
+            <Label>Minimum mutations number</Label>
+            <TextField fx:id="minMutationsNumber"> </TextField>
+            <Label>Maximum mutations number</Label>
+            <TextField fx:id="maxMutationsNumber"> </TextField>
+            <Label>Mutation variant</Label>
+            <ComboBox fx:id="mutationVariant" minWidth="200"> </ComboBox>
+            <Label>Animal genome length</Label>
+            <TextField fx:id="animalGenomeLength"> </TextField>
+            <CheckBox fx:id="saveStatistics">Save statistics</CheckBox>
+            <Button onAction="#onLoadConfigurationClicked" minWidth="200">Wczytaj konfigurację</Button>
+            <Button onAction="#onExportConfigurationClicked" minWidth="200">Eksportuj konfigurację</Button>
+            <Label fx:id="errorLabel" textFill="red" wrapText="true" maxWidth="200"/>
+            <Button onAction="#onSimulationStartClicked" minWidth="150">Start</Button>
+        </GridPane>
+    </center>
+</BorderPane>
