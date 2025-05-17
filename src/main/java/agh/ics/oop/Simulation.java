@@ -1,7 +1,6 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +37,12 @@ public class Simulation implements Runnable {
         {
             int animalIndex = i % animalsList.size();
             world.move(animalsList.get(animalIndex), moveDirectionsList.get(i));
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                System.out.println("Simulation interrupted");
+                Thread.currentThread().interrupt();
+            }
         }
     }
 
